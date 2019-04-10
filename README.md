@@ -21,7 +21,7 @@
 
 <br/>
 
-<h3 id="SHBLayout">SHBLayout.lua</h3>
+<h3 id="HBLayout">SHBLayout.lua</h3>
 
 这是设置窗口位置的一个模块，主要代码如下：
 
