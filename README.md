@@ -1,0 +1,2 @@
+# HBHammerspoonConfig
+Hammerspoon的配置文件
