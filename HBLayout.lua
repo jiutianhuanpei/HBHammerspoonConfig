@@ -1,31 +1,31 @@
-# HBHammerspoonConfig
 
 
-* [init](#init)
+local function HBSuperLayout( mods, key, alert, frame)
 
-* [HBLayout](#HBLayout)
+  hs.hotkey.bind(mods, key, function()
 
----
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
 
-<h3 id="init">init.lua</h3>
+    -- lua 语法的下标不是从 0 开始，而是从 1 开始
+    f.x = max.x + max.w * frame[1]
+    f.y = max.y + max.h * frame[2]
+    f.w = max.w * frame[3]
+    f.h = max.h * frame[4]
 
-这个文件是 app 的配置文件，现在写的很少：
+    win:setFrame(f)
 
-![](https://ws3.sinaimg.cn/large/006tNc79ly1g1xugkygpfj30p406iq3n.jpg)
+    if (string.len(alert) ~= 0)
+    then
+      hs.alert.closeAll();
+      hs.alert(alert)
+    end
 
-一个是快捷键 cmd+alt+ctrl+R 来重载 app 的配置文件；
+  end)
+end
 
-一个是引用 HBLayout.lua 的模块；
-
-以后可能会增加别的模块，都需要在这里引用。其中那个 alert，要写在引用之前，不然在按重载快捷键之后，如果模块内写的有误可能就没这个提示了。
-
-<br/>
-
-<h3 id="SHBLayout">SHBLayout.lua</h3>
-
-这是设置窗口位置的一个模块，主要代码如下：
-
-```lua
 -- shift ctrl alt cmd 可选
 local mods = {"alt", "ctrl"}
 
@@ -52,7 +52,5 @@ HBLayout(".", "左小", {0.7, 0, 0.3, 1})
 
 HBLayout("space", "全屏", {0, 0, 1, 1})
 HBLayout("tab", "居中", {0.2, 0.15, 0.6, 0.7})
-```
 
-封装了一个函数 `HBLayout` 用于快捷设置窗口的位置。
 
