@@ -1,5 +1,7 @@
 
 
+local lastKey = ""
+
 local function HBSuperLayout( mods, key, alert, frame)
 
   hs.hotkey.bind(mods, key, function()
@@ -9,16 +11,37 @@ local function HBSuperLayout( mods, key, alert, frame)
     local screen = win:screen()
     local max = screen:frame()
 
-    -- lua 语法的下标不是从 0 开始，而是从 1 开始
-    f.x = max.x + max.w * frame[1]
-    f.y = max.y + max.h * frame[2]
-    f.w = max.w * frame[3]
-    f.h = max.h * frame[4]
+    local nextPice = 10
+
+    if (key == "up" and lastKey == key) then
+      f.h = f.h - nextPice
+
+    elseif (key == "left" and (lastKey == key or lastKey == ",")) then
+      f.w = f.w - nextPice
+
+    elseif (key == "down" and lastKey == key) then
+      f.h = f.h - nextPice
+      f.y = f.y + nextPice
+      
+
+    elseif (key == "right" and (lastKey == key or lastKey == ".")) then
+      f.w = f.w - nextPice
+      f.x = f.x + nextPice
+      
+
+    else
+      -- lua 语法的下标不是从 0 开始，而是从 1 开始
+      f.x = max.x + max.w * frame[1]
+      f.y = max.y + max.h * frame[2]
+      f.w = max.w * frame[3]
+      f.h = max.h * frame[4]
+    end 
 
     win:setFrame(f)
 
-    if (string.len(alert) ~= 0)
-    then
+    lastKey = key
+
+    if (string.len(alert) ~= 0) then
       hs.alert.closeAll();
       hs.alert(alert)
     end
@@ -27,14 +50,15 @@ local function HBSuperLayout( mods, key, alert, frame)
 end
 
 -- shift ctrl alt cmd 可选
-local mods = {"alt", "ctrl"}
+local outMods = {"alt", "ctrl"}
+local inMods = {"alt", "ctrl", "cmd"}
 
--- 设置窗口位置
--- key：除 mods 之外的那个热键
--- alert：提示语，传 "" 时不提示
--- frame：窗口的位置，传入table，数值是主屏对应的 x y width height 的比例，0~1
 local function HBLayout(key, alert, frame)
-  HBSuperLayout(mods, key, alert, frame)  
+  HBSuperLayout(outMods, key, alert, frame)
+end
+
+local function HBInKeyboardLayout(key, alert, frame)
+  HBSuperLayout(inMods, key, alert, frame)
 end
 
 HBLayout("left", "左", {0, 0, 0.5, 1})
@@ -42,10 +66,17 @@ HBLayout("right", "右", {0.5, 0, 0.5, 1})
 HBLayout("up", "上", {0, 0, 1, 0.5})
 HBLayout("down", "下", {0, 0.5, 1, 0.5})
 
+-- 外接键盘
 HBLayout("pad4", "左上", {0, 0, 0.5, 0.5})
 HBLayout("pad5", "右上", {0.5, 0, 0.5, 0.5})
 HBLayout("pad1", "左下", {0, 0.5, 0.5, 0.5})
 HBLayout("pad2", "右下", {0.5, 0.5, 0.5, 0.5})
+
+-- 内置键盘
+HBInKeyboardLayout("up", "左上", {0, 0, 0.5, 0.5})
+HBInKeyboardLayout("right", "右上", {0.5, 0, 0.5, 0.5})
+HBInKeyboardLayout("left", "左下", {0, 0.5, 0.5, 0.5})
+HBInKeyboardLayout("down", "右下", {0.5, 0.5, 0.5, 0.5})
 
 HBLayout(",", "右大", {0, 0, 0.7, 1})
 HBLayout(".", "左小", {0.7, 0, 0.3, 1})
