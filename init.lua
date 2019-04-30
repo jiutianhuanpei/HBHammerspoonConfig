@@ -16,7 +16,14 @@ function reloadConfig(files)
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
+
 require "HBLayout"
 require "HBSpoonsPlugins"
 require "HBForWork"
 require "HBInputModule"
+require "HBAudioModule"
+
+
+
+
+

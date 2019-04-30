@@ -1,11 +1,19 @@
 
+
+local englistStr = "com.apple.keylayout.US"
+local wubiStr = "com.sogou.inputmethod.sogouWB.wubi"
+
+local function HBCurrentSourceID()
+	return hs.keycodes.currentSourceID()
+end 
+
 local function Chinese() 
 
-	hs.keycodes.currentSourceID("com.sogou.inputmethod.sogouWB.wubi")
+	hs.keycodes.currentSourceID(wubiStr)
 end
 
 local function English( )
-	hs.keycodes.currentSourceID("com.apple.keylayout.US")
+	hs.keycodes.currentSourceID(englistStr)
 end
 
 local function _HBSetAppInputMethod( appName, setFun, event )
@@ -14,6 +22,8 @@ local function _HBSetAppInputMethod( appName, setFun, event )
 		setFun()
 	end)
 end 
+
+
 
 local function HBSetEnglishApps( apps )
 	for i,v in ipairs(apps) do
@@ -31,20 +41,31 @@ HBSetEnglishApps({"iTerm2", "Sublime Text", "Xcode", "网易有道词典", "访�
 HBSetChineseApps({"Safari 浏览器", "QQ音乐", "QQ", "微信"})
 
 
+hs.hotkey.bind({'alt'}, "space", function (  )
+
+	if (HBCurrentSourceID()) == wubiStr then 
+		
+		English()
+	else  
+		Chinese()
+	end
+end)
+
+
 -- 用于Debug app属性
 
-hs.hotkey.bind({'ctrl', i}, ".", function()
-local aa = "\n\nApp path: "
-..hs.window.focusedWindow():application():path()
-.."\n"
-.."App name: "
-..hs.window.focusedWindow():application():name()
-.."\n"
-.."IM source id: "
-..hs.keycodes.currentSourceID()
+-- hs.hotkey.bind({'ctrl', i}, ".", function()
+-- local aa = "\n\nApp path: "
+-- ..hs.window.focusedWindow():application():path()
+-- .."\n"
+-- .."App name: "
+-- ..hs.window.focusedWindow():application():name()
+-- .."\n"
+-- .."IM source id: "
+-- ..hs.keycodes.currentSourceID()
 
-print(aa)
-end)
+-- print(aa)
+-- end)
 
 
 
