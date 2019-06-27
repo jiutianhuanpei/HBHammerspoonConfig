@@ -22,6 +22,8 @@ require "HBSpoonsPlugins"
 require "HBForWork"
 require "HBInputModule"
 require "HBAudioModule"
+require "HBHeadphone"
+require "HBTools"
 
 
 
