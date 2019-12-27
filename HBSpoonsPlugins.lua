@@ -1,5 +1,5 @@
 
-hs.loadSpoon("Calendar")
+-- hs.loadSpoon("Calendar")
 
 
 

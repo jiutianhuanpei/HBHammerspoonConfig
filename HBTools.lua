@@ -17,6 +17,7 @@ local function reloadWubiDic( aaa )
 
 	cmd = '/Library/Input\\ Methods/Squirrel.app/Contents/MacOS/Squirrel --reload'
 	os.execute(cmd)	
+	print("鼠须管刷新")
 end 
 
 hs.pathwatcher.new("/Users/hongbang/Library/Rime/wubi86_jidian_user.dict.yaml", reloadWubiDic):start()	
