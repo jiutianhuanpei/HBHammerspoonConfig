@@ -7,6 +7,13 @@
 
 ---
 
+使用便捷命令：
+
+```
+rm -rf ~/.hammerspoon
+git clone https://github.com/jiutianhuanpei/HBHammerspoonConfig.git  ~/.hammerspoon
+```
+
 <h3 id="init">init.lua</h3>
 
 这个文件是 app 的配置文件，现在写的很少：
