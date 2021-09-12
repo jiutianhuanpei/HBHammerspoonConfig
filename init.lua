@@ -19,7 +19,7 @@ hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
 require "HBLayout"
 require "HBSpoonsPlugins"
-require "HBForWork"
+-- require "HBForWork"
 require "HBInputModule"
 require "HBAudioModule"
 require "HBHeadphone"
